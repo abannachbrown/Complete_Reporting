@@ -36,9 +36,10 @@ names(PRISMA_endorsers) <- "endorsers"
 # 
 # SRs_table <- read_bibliography("epistemonikos_srs_ris20190807.ris")
 
-guess_encoding("Epistemonikos_srs_excel20190807.txt")
+# guess_encoding("Epistemonikos_srs_excel20190807.txt")
 
 ### import data set (tab delimited export from endnote library)
+library(tidyverse)
 SRs_table <- read_delim("Epistemonikos_srs_excel20190807.txt", 
                          "\t", escape_double = FALSE, locale = locale(encoding = "WINDOWS-1252"), 
                          trim_ws = TRUE
@@ -46,9 +47,9 @@ SRs_table <- read_delim("Epistemonikos_srs_excel20190807.txt",
                         )
 
 ## check default encoding
-Sys.getlocale("LC_CTYPE")
+#Sys.getlocale("LC_CTYPE")
 # check supported encoding
-iconvlist()
+#iconvlist()
 
 ### issues with encoding of windows-1252 or CP-1252
 
@@ -58,6 +59,7 @@ iconvlist()
 head(SRs_table)
 
 summary(SRs_table)
+# not the same as 11263
 
 ###################
 ###### Clean data 
