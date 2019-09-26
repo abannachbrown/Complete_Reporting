@@ -169,10 +169,180 @@ control_papers <- subset(SRs_4, !(Journal %in% PRISMA_endorsers$endorsers))
 ##############################################
 ## additionally: randomly select rows for 
 
-intervention_papers_rand25 <- sample_n(intervention_papers, 25)
+
+### PILOT PAPERS 
+intervention_papers_2009_1 <-intervention_papers %>% 
+                                subset(date_year == 2009 & 6 >= date_month)   
+                                # %>%
+                                # sample_n(25)
+
+intervention_papers_2009 <-intervention_papers %>% 
+  subset(date_year == 2009 #& 6 >= date_month
+         )   
+# %>%
+# sample_n(25)
+  
+
+intervention_papers_2009_2 <-intervention_papers %>% 
+  subset(date_year == 2009 & date_month > 6)   
+# %>%
+# sample_n(25)
 
 
 control_papers_rand25 <- sample_n(control_papers, 25)
+
+control_papers_2009_1 <-control_papers %>% 
+  subset(date_year == 2009 & 6 >= date_month)  %>%  
+  sample_n(25)
+
+
+control_papers_2009_2 <-control_papers %>% 
+  subset(date_year == 2009 & date_month > 6)  %>%  
+  sample_n(25)
+
+control_papers_2009 <-control_papers %>% 
+  subset(date_year == 2009 
+         #& 6 >= date_month
+         )  %>%  
+  sample_n(25)
+
+
+
+
+write_tsv()
+
+# write_tsv(quote=FALSE, row.names = FALSE, sep="\t", na='') %>% 
+  
+  removeNewline <- function(text){
+    print("-- Start to remove \r \n \f \t")
+    text <- gsub("\r|\n|\f|\t|(NULL)", " ", text)
+    return(text)
+  }
+  
+control_download <-  control_papers_2009 %>%
+  mutate(
+    title = removeNewline(Title),
+    surname = removeNewline(Authors),
+    firstname = "",
+    csurname = "",
+    cfirstname = "",
+    cauthororder = "",
+    publicationName = removeNewline(Journal),
+    doi = "",
+    url = "",
+    abstract = removeNewline(Abstract),
+    keywords = "ID",
+    URL = "",
+    authorAddress = "",
+    referenceType = "",
+    pdfPath = ""
+  ) %>%
+  select(
+    title = title,
+    firstname = firstname,
+    surname = surname,
+    csurname = csurname,
+    cfirstname = cfirstname,
+    cauthororder = cauthororder,
+    publicationName = publicationName,
+    alternateName = Journal,
+    abstract = abstract,
+    URL = URL,
+    authorAddress = authorAddress,
+    year = Year,
+    DOI = doi,
+    referenceType = referenceType,
+    pdfPath = pdfPath,
+    keywords = ID
+  )
+
+names(control_download) <- c( "Title",
+                          "First Author First Name",
+                          "First Author Surname",
+                          "Corresponding Author First Name",
+                          "Corresponding Author Surname",
+                          "Corresponding Author Order",
+                          "Publication Name",
+                          "Alternate Name",
+                          "Abstract",
+                          "Url",
+                          "Author Address",
+                          "Year",
+                          "DOI",
+                          "Reference Type",
+                          "PDF Relative Path",
+                          "Keywords"
+)
+
+                          
+write.table(control_download, file = "control_papers_2009.tsv", quote=FALSE, row.names = FALSE, sep="\t", na='' )
+
+
+
+removeNewline <- function(text){
+  print("-- Start to remove \r \n \f \t")
+  text <- gsub("\r|\n|\f|\t|(NULL)", " ", text)
+  return(text)
+}
+
+intervention_download_pilot <-  intervention_papers_2009 %>%
+  mutate(
+    title = removeNewline(Title),
+    surname = removeNewline(Authors),
+    firstname = "",
+    csurname = "",
+    cfirstname = "",
+    cauthororder = "",
+    publicationName = removeNewline(Journal),
+    doi = "",
+    url = "",
+    abstract = removeNewline(Abstract),
+    keywords = "ID",
+    URL = "",
+    authorAddress = "",
+    referenceType = "",
+    pdfPath = ""
+  ) %>%
+  select(
+    title = title,
+    firstname = firstname,
+    surname = surname,
+    csurname = csurname,
+    cfirstname = cfirstname,
+    cauthororder = cauthororder,
+    publicationName = publicationName,
+    alternateName = Journal,
+    abstract = abstract,
+    URL = URL,
+    authorAddress = authorAddress,
+    year = Year,
+    DOI = doi,
+    referenceType = referenceType,
+    pdfPath = pdfPath,
+    keywords = ID
+  )
+
+names(intervention_download_pilot) <- c( "Title",
+                              "First Author First Name",
+                              "First Author Surname",
+                              "Corresponding Author First Name",
+                              "Corresponding Author Surname",
+                              "Corresponding Author Order",
+                              "Publication Name",
+                              "Alternate Name",
+                              "Abstract",
+                              "Url",
+                              "Author Address",
+                              "Year",
+                              "DOI",
+                              "Reference Type",
+                              "PDF Relative Path",
+                              "Keywords"
+)
+
+
+write.table(intervention_download_pilot, file = "intervention_papers_2009.tsv", quote=FALSE, row.names = FALSE, sep="\t", na='' )
+
 
 ########################
 # code to later select paper that were'nt selected before
