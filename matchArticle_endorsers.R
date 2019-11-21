@@ -206,7 +206,20 @@ control_papers_2009 <-control_papers %>%
          )  %>%  
   sample_n(25)
 
+########################
+## additional pilot papers 2012
 
+control_papers_2012_2 <-control_papers %>% 
+  subset(date_year == 2012 & date_month > 6)  %>%  
+  sample_n(25)
+
+
+intervention_papers_2012_2 <-intervention_papers %>% 
+  subset(date_year == 2012 & date_month > 6) %>%
+  sample_n(25)
+
+
+#############################
 
 
 write_tsv()
