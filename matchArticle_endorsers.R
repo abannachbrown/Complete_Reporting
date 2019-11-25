@@ -219,8 +219,236 @@ intervention_papers_2012_2 <-intervention_papers %>%
   sample_n(25)
 
 
-#############################
+##### sample size calc say 45 papers per
 
+
+## 2009
+########################
+# code to later select paper that were'nt selected before
+#####################
+ #import pilot papers
+control_papers_2009 <- read.delim("C:/Users/abannach/OneDrive - Bond University/PRISMA-A Project/Complete_Reporting/control_papers_2009.tsv")
+control_papers_2012 <- read.delim("C:/Users/abannach/OneDrive - Bond University/PRISMA-A Project/Complete_Reporting/control_papers_2012.tsv")
+intervention_papers_2009.tsv <- read.delim("C:/Users/abannach/OneDrive - Bond University/PRISMA-A Project/Complete_Reporting/intervention_papers_2009.tsv.txt")
+intervention_papers_2012 <- read.delim("C:/Users/abannach/OneDrive - Bond University/PRISMA-A Project/Complete_Reporting/intervention_papers_2012.tsv")
+
+# intervention
+# #data in the sample 
+ in_int_2009 <- subset(intervention_papers, (Title %in% intervention_papers_2009.tsv$Title))
+# 
+# #data not in the sample
+ out_int_2009 <- subset(intervention_papers, !(Title %in% intervention_papers_2009.tsv$Title))
+
+ # #data in the sample
+ in_int_2012 <- subset(intervention_papers, (Title %in% intervention_papers_2012$Title))
+ # 
+ # #data not in the sample
+ out_int_2012 <- subset(intervention_papers, !(Title %in% intervention_papers_2012$Title))
+ 
+ 
+ 
+ # #data in the sample 
+ in_cont_2009 <- subset(control_papers, (Title %in% control_papers_2009$Title))
+ # 
+ # #data not in the sample
+ out_cont_2009 <- subset(control_papers, !(Title %in% control_papers_2009$Title))
+ 
+ # #data in the sample
+ in_cont_2012 <- subset(control_papers, (Title %in% control_papers_2012$Title))
+ # 
+ # #data not in the sample
+ out_cont_2012 <- subset(control_papers, !(Title %in% control_papers_2012$Title))
+ 
+ 
+ 
+#### then resample from the out fun
+## resample 2009
+ 
+ control_papers_2009_1_re <-out_cont_2009 %>% 
+   subset(date_year == 2009 & 6 >= date_month)  %>%  
+   sample_n(20)
+ 
+ control_papers_2009_2_re <-out_cont_2009 %>% 
+   subset(date_year == 2009 & date_month > 6)  %>%  
+   sample_n(20)
+ 
+ 
+ intervention_papers_2009_1_re <-out_int_2009 %>% 
+   subset(date_year == 2009 & 6 >= date_month) # %>%
+ #sample_n(45)
+ 
+ intervention_papers_2009_2_re <-out_int_2009 %>% 
+   subset(date_year == 2009 & date_month > 6) #%>%
+ #sample_n(45)
+ 
+ 
+ ## resample 2012
+ 
+ control_papers_2012_1_re <-out_cont_2012 %>% 
+   subset(date_year == 2012 & 6 >= date_month)  %>%  
+   sample_n(45)
+ 
+ control_papers_2012_2_re <-out_cont_2012 %>% 
+   subset(date_year == 2012 & date_month > 6)  %>%  
+   sample_n(20)
+ 
+ 
+ intervention_papers_2012_1_re <-out_int_2012 %>% 
+   subset(date_year == 2012 & 6 >= date_month) # %>%
+# sample_n(45)
+ 
+ intervention_papers_2012_2_re <-out_int_2012 %>% 
+   subset(date_year == 2012 & date_month > 6) # %>%
+ #sample_n(20)
+ 
+
+
+#############################
+control_papers_2010_1 <-control_papers %>% 
+  subset(date_year == 2010 & 6 >= date_month)  %>%  
+  sample_n(45)
+
+control_papers_2010_2 <-control_papers %>% 
+  subset(date_year == 2010 & date_month > 6)  %>%  
+  sample_n(45)
+
+
+intervention_papers_2010_1 <-intervention_papers %>% 
+  subset(date_year == 2010 & 6 >= date_month) # %>%
+#sample_n(45)
+
+intervention_papers_2010_2 <-intervention_papers %>% 
+  subset(date_year == 2010 & date_month > 6) #%>%
+  #sample_n(45)
+
+
+#### 2011
+
+
+control_papers_2011_1 <-control_papers %>% 
+  subset(date_year == 2011 & 6 >= date_month)  %>%  
+  sample_n(45)
+
+control_papers_2011_2 <-control_papers %>% 
+  subset(date_year == 2011 & date_month > 6)  %>%  
+  sample_n(45)
+
+
+intervention_papers_2011_1 <-intervention_papers %>% 
+  subset(date_year == 2011 & 6 >= date_month) # %>%
+#sample_n(45)
+
+intervention_papers_2011_2 <-intervention_papers %>% 
+  subset(date_year == 2011 & date_month > 6) #%>%
+#sample_n(45)
+
+
+
+### 2012 - need to resample so they are not the same
+
+
+
+### 2013
+
+
+control_papers_2013_1 <-control_papers %>% 
+  subset(date_year == 2013 & 6 >= date_month)  %>%  
+  sample_n(45)
+
+control_papers_2013_2 <-control_papers %>% 
+  subset(date_year == 2013 & date_month > 6)  %>%  
+  sample_n(45)
+
+
+intervention_papers_2013_1 <-intervention_papers %>% 
+  subset(date_year == 2013 & 6 >= date_month) # %>%
+#sample_n(45)
+
+intervention_papers_2013_2 <-intervention_papers %>% 
+  subset(date_year == 2013 & date_month > 6) %>%
+sample_n(45)
+
+
+### 2014
+
+control_papers_2014_1 <-control_papers %>% 
+  subset(date_year == 2014 & 6 >= date_month)  %>%  
+  sample_n(45)
+
+control_papers_2014_2 <-control_papers %>% 
+  subset(date_year == 2014 & date_month > 6)  %>%  
+  sample_n(45)
+
+
+intervention_papers_2014_1 <-intervention_papers %>% 
+  subset(date_year == 2014 & 6 >= date_month) # %>%
+#sample_n(45)
+
+intervention_papers_2014_2 <-intervention_papers %>% 
+  subset(date_year == 2014 & date_month > 6) %>%
+  sample_n(45)
+
+
+##### 2015
+
+control_papers_2015_1 <-control_papers %>% 
+  subset(date_year == 2015 & 6 >= date_month)  %>%  
+  sample_n(45)
+
+control_papers_2015_2 <-control_papers %>% 
+  subset(date_year == 2015 & date_month > 6)  %>%  
+  sample_n(45)
+
+
+intervention_papers_2015_1 <-intervention_papers %>% 
+  subset(date_year == 2015 & 6 >= date_month) # %>%
+# sample_n(45)
+
+intervention_papers_2015_2 <-intervention_papers %>% 
+  subset(date_year == 2015 & date_month > 6) %>%
+  sample_n(45)
+
+##### 2016
+
+control_papers_2016_1 <-control_papers %>% 
+  subset(date_year == 2016 & 6 >= date_month)  %>%  
+  sample_n(45)
+
+control_papers_2016_2 <-control_papers %>% 
+  subset(date_year == 2016 & date_month > 6)  %>%  
+  sample_n(45)
+
+
+intervention_papers_2016_1 <-intervention_papers %>% 
+  subset(date_year == 2016 & 6 >= date_month)  %>%
+ sample_n(45)
+
+intervention_papers_2016_2 <-intervention_papers %>% 
+  subset(date_year == 2016 & date_month > 6) %>%
+  sample_n(45)
+
+
+##### 2017
+
+control_papers_2017_1 <-control_papers %>% 
+  subset(date_year == 2017 & 6 >= date_month)  %>%  
+  sample_n(45)
+
+control_papers_2017_2 <-control_papers %>% 
+  subset(date_year == 2017 & date_month > 6) # %>%  
+#  sample_n(45)
+
+
+intervention_papers_2017_1 <-intervention_papers %>% 
+  subset(date_year == 2017 & 6 >= date_month) # %>%
+#  sample_n(45)
+
+intervention_papers_2017_2 <-intervention_papers %>% 
+  subset(date_year == 2017 & date_month > 6)# %>%
+# sample_n(45)
+
+
+########################
 
 write_tsv()
 
@@ -357,17 +585,7 @@ names(intervention_download_pilot) <- c( "Title",
 write.table(intervention_download_pilot, file = "intervention_papers_2009.tsv", quote=FALSE, row.names = FALSE, sep="\t", na='' )
 
 
-########################
-# code to later select paper that were'nt selected before
-#####################
 
-# #data in the sample
-# in_int <- intervention_papers[intervention_papers_rand25,]
-# 
-# #data not in the sample
-# out_int <- intervention_papers[-intervention_papers_rand25,]
-
-#### then resample from the out fun
 
 
 #######################################################
@@ -396,12 +614,12 @@ blind_cont_25 <- control_papers_rand25 %>%
 ########################################
 #### export to ENdnote or bibtex file
 
-BibFile_ <- BibEntry(bibtype = "Article", key = intervention_papers$ID, title = intervention_papers$Title,
-         author = intervention_papers$Authors, journaltitle = intervention_papers$Journal,
-         date = intervention_papers$date_year_month, pubstate = "forthcoming")
-
-
-WriteBib(as.BibEntry(BibFile_), "example2.bib")
+# BibFile_ <- BibEntry(bibtype = "Article", key = intervention_papers$ID, title = intervention_papers$Title,
+#          author = intervention_papers$Authors, journaltitle = intervention_papers$Journal,
+#          date = intervention_papers$date_year_month, pubstate = "forthcoming")
+# 
+# 
+# WriteBib(as.BibEntry(BibFile_), "example2.bib")
 
 
 
