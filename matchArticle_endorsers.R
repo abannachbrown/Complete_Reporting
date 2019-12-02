@@ -246,7 +246,7 @@ intervention_papers_2012 <- read.delim("C:/Users/abannach/OneDrive - Bond Univer
  out_int_2012 <- subset(intervention_papers, !(Title %in% intervention_papers_2012$Title))
  
  
- 
+ ## control
  # #data in the sample 
  in_cont_2009 <- subset(control_papers, (Title %in% control_papers_2009$Title))
  # 
@@ -448,6 +448,30 @@ intervention_papers_2017_2 <-intervention_papers %>%
 # sample_n(45)
 
 
+##########################################
+# 2/12/2019 merge all sampled articles together
+
+all_control <- do.call("rbind", list(control_papers_2009_1_re, control_papers_2009_2_re, 
+                                     control_papers_2010_1, control_papers_2010_2, 
+                                     control_papers_2011_1, control_papers_2011_2, 
+                                     control_papers_2012_1_re, control_papers_2012_2_re, 
+                                     control_papers_2013_1, control_papers_2013_2, 
+                                     control_papers_2014_1, control_papers_2014_2, 
+                                     control_papers_2015_1, control_papers_2015_2, 
+                                     control_papers_2016_1, control_papers_2016_2, 
+                                     control_papers_2017_1, control_papers_2017_2))
+
+all_int <- do.call("rbind", list(intervention_papers_2009_1_re, intervention_papers_2009_2_re, 
+                                 intervention_papers_2010_1, intervention_papers_2010_2, 
+                                 intervention_papers_2011_1, intervention_papers_2011_2, 
+                                 intervention_papers_2012_1_re, intervention_papers_2012_2_re, 
+                                 intervention_papers_2013_1, intervention_papers_2013_2, 
+                                 intervention_papers_2014_1, intervention_papers_2014_2, 
+                                 intervention_papers_2015_1, intervention_papers_2015_2, 
+                                 intervention_papers_2016_1, intervention_papers_2016_2, 
+                                 intervention_papers_2017_1, intervention_papers_2017_2))
+
+
 ########################
 
 write_tsv()
@@ -585,7 +609,132 @@ names(intervention_download_pilot) <- c( "Title",
 write.table(intervention_download_pilot, file = "intervention_papers_2009.tsv", quote=FALSE, row.names = FALSE, sep="\t", na='' )
 
 
+#######################################################\
+### download SyRF format for full papers
+##################################################
 
+removeNewline <- function(text){
+  print("-- Start to remove \r \n \f \t")
+  text <- gsub("\r|\n|\f|\t|(NULL)", " ", text)
+  return(text)
+}
+
+all_int_download <-  all_int %>%
+  mutate(
+    title = removeNewline(Title),
+    surname = removeNewline(Authors),
+    firstname = "",
+    csurname = "",
+    cfirstname = "",
+    cauthororder = "",
+    publicationName = removeNewline(Journal),
+    doi = "",
+    url = "",
+    abstract = removeNewline(Abstract),
+    keywords = "ID",
+    URL = "",
+    authorAddress = "",
+    referenceType = "",
+    pdfPath = ""
+  ) %>%
+  select(
+    title = title,
+    firstname = firstname,
+    surname = surname,
+    csurname = csurname,
+    cfirstname = cfirstname,
+    cauthororder = cauthororder,
+    publicationName = publicationName,
+    alternateName = Journal,
+    abstract = abstract,
+    URL = URL,
+    authorAddress = authorAddress,
+    year = Year,
+    DOI = doi,
+    referenceType = referenceType,
+    pdfPath = pdfPath,
+    keywords = ID
+  )
+
+names(all_int_download) <- c( "Title",
+                                         "First Author First Name",
+                                         "First Author Surname",
+                                         "Corresponding Author First Name",
+                                         "Corresponding Author Surname",
+                                         "Corresponding Author Order",
+                                         "Publication Name",
+                                         "Alternate Name",
+                                         "Abstract",
+                                         "Url",
+                                         "Author Address",
+                                         "Year",
+                                         "DOI",
+                                         "Reference Type",
+                                         "PDF Relative Path",
+                                         "Keywords"
+)
+
+
+write.table(all_int_download, file = "all_int_download.txt", quote=FALSE, row.names = FALSE, sep="\t", na='' )
+
+
+all_control_download <-  all_control %>%
+  mutate(
+    title = removeNewline(Title),
+    surname = removeNewline(Authors),
+    firstname = "",
+    csurname = "",
+    cfirstname = "",
+    cauthororder = "",
+    publicationName = removeNewline(Journal),
+    doi = "",
+    url = "",
+    abstract = removeNewline(Abstract),
+    keywords = "ID",
+    URL = "",
+    authorAddress = "",
+    referenceType = "",
+    pdfPath = ""
+  ) %>%
+  select(
+    title = title,
+    firstname = firstname,
+    surname = surname,
+    csurname = csurname,
+    cfirstname = cfirstname,
+    cauthororder = cauthororder,
+    publicationName = publicationName,
+    alternateName = Journal,
+    abstract = abstract,
+    URL = URL,
+    authorAddress = authorAddress,
+    year = Year,
+    DOI = doi,
+    referenceType = referenceType,
+    pdfPath = pdfPath,
+    keywords = ID
+  )
+
+names(all_control_download) <- c( "Title",
+                                         "First Author First Name",
+                                         "First Author Surname",
+                                         "Corresponding Author First Name",
+                                         "Corresponding Author Surname",
+                                         "Corresponding Author Order",
+                                         "Publication Name",
+                                         "Alternate Name",
+                                         "Abstract",
+                                         "Url",
+                                         "Author Address",
+                                         "Year",
+                                         "DOI",
+                                         "Reference Type",
+                                         "PDF Relative Path",
+                                         "Keywords"
+)
+
+
+write.table(all_control_download, file = "all_control_download.tsv", quote=FALSE, row.names = FALSE, sep="\t", na='' )
 
 
 #######################################################
